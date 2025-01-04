@@ -1,4 +1,5 @@
 import Navbar from "./pages/Navbar";
+import "./App.css";
 // import { decrement, increment } from "./redux/features/counter/counterSlice";
 
 // import { useAppDispatch, useAppSelector } from "./redux/hook";

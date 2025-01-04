@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, TRootState } from "./store";
+import { AppDispatch, TRootState } from "./Interfaces";
+
 
 
 
