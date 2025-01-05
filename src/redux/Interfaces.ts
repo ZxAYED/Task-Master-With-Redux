@@ -5,7 +5,7 @@ export interface ITask {
     title: string,
     description: string,
     dueDate: Date,
-    isCompleted: false,
+    isCompleted: boolean,
     priority: "High" | "Medium" | "Low",
 }
 export interface IInitialState {
