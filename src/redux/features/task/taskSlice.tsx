@@ -1,41 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState, TRootState } from "../../Interfaces";
+import { ITask } from "./../../Interfaces";
 
 const initialState: IInitialState = {
-  tasks: [
-    {
-      id: "sax",
-      title: "Initialize Frontend",
-      description: "Create Homepage & Routing",
-      dueDate: new Date("230232312"),
-      isCompleted: false,
-      priority: "High",
-    },
-    {
-      id: "saxs",
-      title: "Initialize Frontend",
-      description: "Create Homepage & Routing",
-      dueDate: new Date("230232312"),
-      isCompleted: false,
-      priority: "High",
-    },
-    {
-      id: "saxssa",
-      title: "Initialize Frontend",
-      description: "Create Homepage & Routing",
-      dueDate: new Date("230232312"),
-      isCompleted: false,
-      priority: "High",
-    },
-  ],
+  tasks: [],
   filter: "All",
 };
+type DraftTask = Pick<ITask, "title" | "description" | "dueDate" | "priority">;
 
+const createTask = (taskData: DraftTask): ITask => {
+  return { id: nanoid(), isCompleted: false, ...taskData };
+};
 const taskSlice = createSlice({
   name: "task",
   initialState,
-  reducers: {},
+  reducers: {
+    addTask: (state, action: PayloadAction<ITask>) => {
+      // const taskData = { ...action.payload, id:nanoid(), isCompleted: true };
+      const taskData = createTask(action.payload);
+      state.tasks.push(taskData);
+    },
+  },
 });
+
+export const { addTask } = taskSlice.actions;
 
 export const selectTask = (state: TRootState) => {
   return state.todo.tasks;

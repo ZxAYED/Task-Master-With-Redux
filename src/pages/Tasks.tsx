@@ -1,16 +1,12 @@
 import { AddTaskModal } from "@/module/task/AddTaskModal";
 import TaskCard from "@/module/task/TaskCard";
-import { selectFilter, selectTask } from "@/redux/features/task/taskSlice";
+import { selectTask } from "@/redux/features/task/taskSlice";
 import { useAppSelector } from "@/redux/hook";
-import { ITask } from "@/redux/Interfaces";
 
-interface IProps {
-  task: ITask;
-}
 const Tasks = () => {
   const tasks = useAppSelector(selectTask);
 
-  const filter = useAppSelector(selectFilter);
+  // const filter = useAppSelector(selectFilter);
 
   return (
     <>

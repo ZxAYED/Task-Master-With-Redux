@@ -31,19 +31,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useForm, FormProvider } from "react-hook-form";
-import { useState } from "react";
+import {
+  useForm,
+  FormProvider,
+  FormSubmitHandler,
+  FieldValue,
+  FieldValues,
+} from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { useAppDispatch } from "@/redux/hook";
+import { addTask } from "@/redux/features/task/taskSlice";
+import { ITask } from "@/redux/Interfaces";
 
 export function AddTaskModal() {
   const form = useForm();
+  const dispatch = useAppDispatch();
+  const onSubmit: FormSubmitHandler<FieldValues> = (data) => {
+    const taskData = {
+      ...data,
+      // dueDate: data.dueDate.toISOString()
+    };
 
-  const onSubmit = (data) => {
-    console.log(data);
+    dispatch(addTask(taskData as unknown as ITask));
   };
 
   return (
@@ -76,7 +89,7 @@ export function AddTaskModal() {
             />
             <FormField
               control={form.control}
-              name="Description"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
@@ -93,7 +106,7 @@ export function AddTaskModal() {
 
             <FormField
               control={form.control}
-              name="dob"
+              name="dueDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Due Date</FormLabel>
@@ -131,24 +144,21 @@ export function AddTaskModal() {
 
             <FormField
               control={form.control}
-              name="Priority"
+              name="priority"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Priority</FormLabel>
                   <FormControl>
-                    <Select
-                      onValueChange={field.value}
-                      defaultValue={field.value}
-                    >
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select Priority" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Priority Level</SelectLabel>
-                          <SelectItem value="high">High</SelectItem>
-                          <SelectItem value="medium">Medium</SelectItem>
-                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="High">High</SelectItem>
+                          <SelectItem value="Medium">Medium</SelectItem>
+                          <SelectItem value="Low">Low</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
